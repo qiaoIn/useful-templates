@@ -11,6 +11,9 @@
 *.cb
 *.cb2
 
+## for mac
+*.DS_Store
+
 ## Intermediate documents:
 *.dvi
 *-converted-to.*

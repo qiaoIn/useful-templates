@@ -1,0 +1,30 @@
+%\usepackage[UTF8,noindent]{ctex}
+\usepackage{amsmath,amsxtra}
+\usepackage{color}
+\usepackage[version=3]{mhchem}
+\usepackage{fixltx2e}
+\usepackage{bbold}
+\usepackage{mathrsfs}
+%\usepackage{minted}
+\usepackage{cleveref}
+%\usepackage{mathtools}     
+\usefonttheme{serif}
+\usetheme{Warsaw}
+\usecolortheme{orchid}
+\usepackage{capt-of}
+\usepackage{lmodern} % remove the warning for use of the \textit
+\makeatletter
+\renewcommand\normalsize{%
+   \@setfontsize\normalsize\@xpt\@xiipt
+   \abovedisplayskip 1\p@ \@plus2\p@ \@minus5\p@
+   \abovedisplayshortskip \z@ \@plus3\p@
+   \belowdisplayshortskip 6\p@ \@plus3\p@ \@minus3\p@
+   \belowdisplayskip \abovedisplayskip
+   \let\@listi\@listI}
+\makeatother
+\setbeamerfont{caption}{size=\tiny}
+% \setbeamertemplate{caption}[numbered] %number the caption and change the font
+% size
+
+\newtheorem{thm}{Theorem}
+\setlength\abovecaptionskip{0pt}
