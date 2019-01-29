@@ -1,0 +1,68 @@
+\documentclass[a4paper]{book}
+\usepackage{notes-style}
+
+%
+% 默认情况下itemize的各项间的间距较大，占用文章空间较多，那么如何调整呢？
+% https://blog.csdn.net/fandroid/article/details/54644966
+% 在导言区进行全局设置，2018-07-05，添加
+%
+\usepackage{enumitem}
+\setenumerate[1]{itemsep=0pt,partopsep=0pt,parsep=\parskip,topsep=5pt}
+\setitemize[1]{itemsep=0pt,partopsep=0pt,parsep=\parskip,topsep=5pt}
+\setdescription{itemsep=0pt,partopsep=0pt,parsep=\parskip,topsep=5pt}
+
+%
+% 每次需要在这里添加图片的路径目录，注意最后面需要有一个 / 2018-07-06 添加
+%
+\graphicspath{{./figures/chap01/}{./figures/chap02/}{./figures/chap03/}{./figures/chap04/}}  
+
+\def\notesversion{0.01}
+
+\hypersetup{%
+  pdftitle={Notes},%
+  pdfkeywords={Distributed System, Deep Learning, Neural Networks},
+  pdfcreator={XeLaTeX with `ctex' package}
+}
+
+% 第四章用到的自定义算符
+% \DeclareMathOperator{\argh}{argh}
+% \DeclareMathOperator*{\nut}{Nut}
+% 第四章的 \proofname 用原先的英文定义
+% \def\proofname{Proof}
+
+\makeindex
+
+\begin{document}
+
+\pagenumbering{Alph}
+
+\input{chap/titlepage}
+
+\frontmatter
+% \input{chap/preface.contrib}
+% \input{chap/preface.overview}
+\tableofcontents
+%\listofsources
+
+\mainmatter
+\input{chap/chap.01.step}
+\input{chap/chap.02.papers}
+\input{chap/chap.03.framework}
+\input{chap/chap.04.system}
+\input{chap/chap.05.deeplearning}
+\input{chap/chap.06.rdma}
+\input{chap/chap.07.algorithms}
+\input{chap/chap.08.interviews}
+\input{chap/chap.09.communication}
+\input{chap/chap.xx.misc}
+
+% \appendix %% 附录页说明
+% \input{chap/app.A.install}
+% \input{chap/app.B.error.help}
+
+% \backmatter %% 参考文献
+% \input{chap/biblio}
+% \input{chap/fdl} % license
+% \printindex
+
+\end{document}

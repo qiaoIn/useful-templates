@@ -1,0 +1,1179 @@
+\chapter{秋招准备}\label{chap:interviews}
+\addtocontents{los}{\protect\addvspace{10pt}}
+
+\begin{intro}
+整理各面经上的经典面试题，将各个思路进行一个系统化的梳理。
+\end{intro}
+
+\section{算法题}
+
+\subsection{判断是否有环？}
+
+\begin{quotation}
+{\color{red}如何判断一个链表是否有环？}
+\end{quotation}
+
+\begin{enumerate}
+\item 最简单也是最直接的想法，从头遍历链表，将已经遍历过的节点信息保存起来，可以
+  在遍历一个新节点时，查看该节点之前是否已经遍历过了，增加一个 tag 标记；或者将
+  已经遍历过的节点信息使用 HashMap 保存起来，当遍历到一个新节点时，直接查表看之
+  前是否已经遍历过该节点。
+\item 使用两个指针 slow 和 fast，在刚开始时这两个指针均指向链表首节点，slow 每
+  次向前走一步（slow = slow->next;），fast 每次向前走两步
+  （fast = fast->next->next;），需要我们自己去判断是否 next 合法，比较 slow
+  和 fast 指针指向的节点，如果相同，说明该链表有环；如果不同，继续进行下一次循环
+  （slow 向前走一步，fast 向前走两步）。当链表中确实存在环的时候，slow 和 fast
+  最终会指向同一个节点；若不存在环，可以通过 fast 达到链表结尾处来结束算法循环。
+\end{enumerate}
+
+环形链表的问题可以引申出更多的算法问题，比如：
+
+\begin{enumerate}
+  \item [问题一] 在一个有环链表中，如何知道环的长度？如何找出链表的入环点？
+  \begin{itemize}
+  \item slow 和 fast 第一次相遇可以用于判断链表是否有环，记录下该碰撞点 p，
+    slow 和 fast 再次于节点 p 相遇即为环的长度。
+  \item 碰撞点 p 到入环点的距离等于头节点到入环点的距离，因此，当 slow 和 fast
+    第一次相遇得到碰撞点 p 之后，从碰撞点 p 和头节点开始走（每次走一步），相遇的
+    那个点就是入环点。
+  \end{itemize}
+  \item [问题二] 判断两个单向链表是否相交，如果相交，求出交点。
+  \item [问题三] 用于找到链表的中间元素。使用快慢指针（slow 和 fast）可以实现。
+\end{enumerate}
+
+
+\noindent\rule[0.25\baselineskip]{\textwidth}{1pt}
+
+\begin{quotation}
+{\color{red}一个有向图用邻接矩阵表示，并且是有权图，现在怎么判断图中有没有环？}
+\end{quotation}
+
+拓扑排序的思想可以借鉴。
+
+
+
+\subsection{排序算法}\label{subsec:sort-algorithms}
+
+
+\begin{quotation}
+  {\color{red}各种排序算法总结}%
+  \footnote{http://www.cnblogs.com/wxisme/p/5243631.html}%
+\end{quotation}
+
+
+\noindent\rule[0.25\baselineskip]{\textwidth}{1pt}
+
+\begin{quotation}
+{\color{red}实现快速排序？}
+\end{quotation}
+
+\textbf{TODO} 待整理
+
+
+\noindent\rule[0.25\baselineskip]{\textwidth}{1pt}
+
+\begin{quotation}
+  {\color{red}被忽视的 partition 算法}%
+  \footnote{https://selfboot.cn/2016/09/01/lost\_partition/}%
+\end{quotation}
+
+
+
+\subsection{二分查找}\label{subsec:binary-search}
+
+\begin{quotation}
+  {\color{red}实现最简单的二分查找，分析二分查找代码实现中需要注意的地方，另外整理可以使用二
+  分查找思想来做的一系列题目。}
+\end{quotation}
+
+
+\section{C / C++}\label{sec:c-and-cplusplus}
+
+\subsection{基础知识}
+
+\begin{quotation}
+  {\color{red}sizeof 运算符}
+\end{quotation}
+
+\verb|sizeof| 运算符返回一条表达式或一个类型名字所占的字节数。 \verb|sizeof| 运
+算符满足右结合律，其所得的值是一个 \verb|size_t| 类型的常量表达式（在编译时即可
+确定值）。 \verb|sizeof| 运算符的运算对象有两种形式：
+
+\qquad \verb|sizeof (type)| \quad or \quad \verb|sizeof expr|
+
+在第二种形式中， \verb|sizeof| 返回的是表达式结果类型的大小。与众不同的一点是，
+\verb|sizeof| 并不实际计算其运算对象的值。
+
+\verb|sizeof| 运算符的结果部分地依赖于其作用的类型：
+\begin{itemize}
+\item 对 \verb|char| 或者类型为 \verb|char| 的表达式执行 \verb|sizeof| 运算，结
+  果得 1；
+\item 对引用类型执行 \verb|sizeof| 运算符得到被引用对象所占空间的大小；
+\item 对指针执行 \verb|sizeof| 运算得到指针本身所占空间的大小；
+\item 对解引用指针执行 \verb|sizeof| 运算得到指针指向的对象所占空间的大小，指针
+  不需有效；
+\item 对数组执行 \verb|sizeof| 运算得到整个数组所占空间的大小。注意，
+  \verb|sizeof| 运算不会把数组转换成指针来处理；
+\item 对 \verb|string| 对象或 \verb|vector| 对象执行 \verb|sizeof| 运算只返回该
+  类型固定部分的大小，不会计算对象中的元素占用了多少空间。
+\end{itemize}
+
+
+\noindent\rule[0.25\baselineskip]{\textwidth}{1pt}
+
+\begin{quotation}
+  {\color{red}C 的结构体和 C++ 结构体的区别}
+\end{quotation}
+
+\begin{itemize}
+\item C 的结构体内不允许有函数存在，C++ 允许有内部成员函数，且允许该函数是虚函数。
+  所以 C 的结构体是没有构造函数、析构函数、和 \verb|this| 指针的。
+\item C 的结构体对内部成员变量的访问权限只能是 public，而 C++ 允许
+  \verb|public| 、 \verb|protected| 、 \verb|private| 三种。
+\item C 语言的结构体是不可以继承的，C++ 的结构体是可以从其他的结构体或者类继承过
+  来的。
+\end{itemize}
+
+以上都是表面的区别，实际区别就是面向过程和面向对象编程思路的区别：
+
+C 的结构体只是把数据变量给包裹起来了，并不涉及算法。而 C++ 是把数据变量及对这些
+数据变量的相关算法给封装起来，并且给对这些数据和类不同的访问权限。C 语言中是没有
+类的概念的，但是 C 语言可以通过结构体内创建函数指针实现面向对象思想。
+
+
+\noindent\rule[0.25\baselineskip]{\textwidth}{1pt}
+
+\begin{quotation}
+  {\color{red}C++ struct 和 class 关键字}
+\end{quotation}
+
+\begin{itemize}
+\item \verb|struct| 和 \verb|class| 都可以用来定义一个类；
+\item \verb|struct| 和 \verb|class| 的默认访问权限不太一样；
+\item 类可以在它的第一个访问说明符之前定义成员，对这种成员的访问权限依赖于类定义
+  的方式。如果使用 \verb|struct| 关键字，则定义再第一个访问说明符之前的成员是
+  \verb|public| 的；相反，如果使用 \verb|class| 关键字，则这些成员是
+  \verb|private| 的。
+\end{itemize}
+
+
+\noindent\rule[0.25\baselineskip]{\textwidth}{1pt}
+
+\begin{quotation}
+  {\color{red}C++ 引用和指针}
+\end{quotation}
+
+
+
+\noindent\rule[0.25\baselineskip]{\textwidth}{1pt}
+
+\begin{quotation}
+  {\color{red}C 语言中的字符串}
+\end{quotation}
+
+\noindent 整理自 \textbf{C 程序设计语言（第2版）} 5.5 字符指针与函数，中文版页码 89
+
+字符串常量 是一个字符数组，例如：
+
+\verb|``hello, world\n'';|
+
+\noindent 在字符串的内部表示中，字符数组以空字符 \verb|`\0'| 结尾，程序可以通过检查空字符
+找到字符数组的结尾。字符串常量占据的存储单元数也因此比双引号内的字符数大 1。
+
+字符串常量最常用的用法也许是作为函数参数，例如：
+
+\verb|printf(``hello, world.\n'');|
+
+\noindent 当类似于这样的一个字符串出现在程序中时，实际上是通过字符指针访问该字符串的。在上
+述语句中， \verb|printf| 接受的是一个指向字符数组第一个字符的指针。也就是说，字符串常量
+可通过一个指向其第一个元素的指针来访问。
+
+除了作为函数参数外，字符串常量还有其他用法。假定指针 \verb|pmessage| 的声明如下：
+
+\verb|char *pmessage;|
+
+\noindent 那么，语句
+
+\verb|pmessage = ``hello, world\n'';|
+
+\noindent 将把一个指向该字符数组的指针赋值给 \verb|pmessage| 。该过程并没有进行字符串的复制，而只
+是涉及到指针的操作。C 语言没有提供将整个字符串作为一个整体进行处理的运算符。下
+面两个定义之间有很大的差别：
+
+\verb|char amessage[] = ``hello, world\n'';  // 定义了一个数组|
+
+\verb|char *pmessage = ``hello, world\n'';  // 定义了一个指针|
+
+上述声明中， \verb|amessage| 是一个仅仅保存足以存放初始化字符串以及空字符
+\verb|`\0'| 的一维数组。数组中的单个字符可以进行修改，但 \verb|amessage| 始终指向同一存
+储位置。另一方面， \verb|pmessage| 是一个指针，其初值指向一个字符串常量，之后它可以被
+修改以指向其他地址，但如果试图通过 \verb|pmessage| 指针修改字符串的内容，结果是没
+有定义的（会出现段错误 \verb|Segment Fault| ）。
+
+另外，在页码 85 中有描述：
+
+在函数定义中，形式参数 \verb|char s[]| 和 \verb|char *s| 是等价的。我们通常更习
+惯于使用后一种形式，因为它比前者更直观地表明了这个参数是一个指针。如果将数组名传
+递给函数，函数可以根据情况判定是按照数组处理还是按照指针处理，随后根据相应的方式
+操作该参数。为了直观且恰当地描述函数，在函数中甚至可以同时使用数组和指针这两种表
+示方法。
+
+另外我们可以从汇编的角度来理解：
+
+第一个字符串是用数组开辟的，它是可以改变的变量。
+
+\begin{sourcecode}[hbtp]
+\begin{Verbatim}
+movq    L_main.amessage(%rip), %rax
+movq    %rax, -22(%rbp)
+movl    L_main.amessage+8(%rip), %ecx
+movl    %ecx, -14(%rbp)
+movw    L_main.amessage+12(%rip), %dx
+movw    %dx, -10(%rbp)
+movb    \$72, -22(%rbp)  %% TODO
+\end{Verbatim}
+\caption{amessage 数组表示的汇编代码}
+\end{sourcecode}
+
+而第二个字符串则是一个常量，也就是字面值。 \verb|pmessage| 只是指向它的指针而已，
+而不能改变指向的内容。
+
+\begin{sourcecode}[hbtp]
+\begin{Verbatim}
+leaq    L_.str(%rip), %rcx
+\end{Verbatim}
+\caption{pmessage 指针表示的汇编代码}
+\end{sourcecode}
+
+可见用数组和用指针是完全不相同的。
+
+要想通过指针来改变常量是错误，正确的写法应该是用 \verb|const| 指针。
+
+\verb|const char *pmessage = ``hello, world\n'';|
+
+\noindent\rule[0.25\baselineskip]{\textwidth}{1pt}
+
+\begin{quotation}
+  {\color{red} C++ 中 string 的使用小结}
+\end{quotation}
+
+正是因为 C 风格字符串(以空字符结尾的字符数组)太过复杂难于掌握，不适合大程序的开
+发，所以 C++ 标准库定义了一种 \verb|string| 类，定义在头文件 \verb|<string>|。
+
+可以使用 C 风格字符串来初始化 C++ 中的 \verb|string| 对象实例，
+
+\verb|string str(``hello, world\n'');  // correct|
+
+\noindent 但是如果直接将 \verb|string| 类型的对象赋值给 C 风格的字符串的话，编译器会报错，
+
+\verb|char *pstr = str;  // error|
+
+\noindent 但是实际应用中这个问题也难以避免，很多时候还是需要将 \verb|string| 类型的转化为
+\verb|char*| 来实现自定义的操作，C++ 标准库也为了和之前用 C 写的程序兼容，于是可
+以用 \verb|string| 的 \verb|c_str()| 函数。
+
+\verb|char *pstr = str.c_str();  // error|
+
+\noindent\verb|c_str()| 为了防止意外地修改 \verb|string| 对象，返回的是 \verb|const|
+指针，所以上面这段代码是不能被编译的。正确的应该是用 \verb|const| 指针。
+
+\verb|const char *pstr = str.c_str();  // correct|
+
+这个 \verb|c_str()| 方法在 C++ IO 流操作上也被广泛应用。在打开文件时，如果要指定
+文件名，可以用 C 风格的字符串。如果用到 \verb|string| 类型的字符串作为文件名时，
+就必须调用 \verb|c_str()| 方法将其转换为一个 C 风格字符串。
+
+\begin{sourcecode}[hbtp]
+\begin{Verbatim}
+string   filename;  //定义文件名称
+cin >> filename;
+ifstream.open(filename.c_str());  //要使用 C 风格字符串
+\end{Verbatim}
+\caption{c\_str() 在 C++ IO 流操作上的应用}
+\end{sourcecode}
+
+对 \verb|string| 有一定了解后，C++ 标准库还定义的一系列丰富的字符串操作，均基于
+\verb|string| 类型。从某一种程度上来说， \verb|string| 就是一种字符容器。
+
+标准库为 \verb|string| 定义了很多方法，包括构造、插入( \verb|insert| )、替换(
+\verb|assign| 和 \verb|replace| )、比较( \verb|compare| )、查找( \verb|find| )、
+删除( \verb|erase| )、连接( \verb|append| )以及对子串的操作( \verb|substr| )，并
+且每一类操作都有很多种重载。%
+\footnote{http://www.cnblogs.com/gaojun/archive/2010/09/11/1824016.html}%
+
+\noindent\rule[0.25\baselineskip]{\textwidth}{1pt}
+
+\begin{quotation}
+  {\color{red}\verb|std::endl| 与 \verb|`\n'| 有什么区别？在执行的功能上？}
+\end{quotation}
+
+\verb|std::endl| 是一个被称为\textbf{操纵符}（manipulator）的特殊值。写入 \verb|std::endl| 的效果是结束
+当前行，并将与设备相关联的缓冲区（buffer）中的内容刷到设备中。缓冲刷新操作可以保
+证到目前为止程序所产生的所有输出都真正写入输出流，而不是仅停留在内存中等待写入流。
+
+在调试程序时，通常会添加打印语句。这类语句应该保证『一直』刷新流，否则，如果程序
+崩溃，输出可能还留在缓冲区中，从而导致关于程序崩溃位置的错误推断。
+
+\verb|`\n'| 为 C++ 语言规定的转义序列之一，\textbf{换行符}
+
+\begin{newnote}[StackExchange 上一个 CodeReview 上的解释]
+  The main difference in the two is that std::endl in addition to adding $\backslash$n to
+  the stream will flush the stream. The stream will already auto flush at the
+  optimal times and forcing a manual flush will only result in a degradation in
+  performance.
+\end{newnote}
+
+\noindent 何时适用 \verb|std::endl| ，何时适用 \verb|`\n'| 呢？
+
+由于流操作符 \verb|operator<<| 的重载，对于 \verb|`\n'| 和 \verb|``\n''| ，输出效果相同。
+
+对于有输出缓冲的流（例如 \verb|std::cout| 、 \verb|std::clog| ），如果不手动进行缓冲区刷新操作，将在缓冲区
+满后自动刷新输出。不过对于 \verb|std::cout| 来说（相对于文件输出流等），缓冲一般体现得并不明
+显。但是必要情况下使用 \verb|std::endl| 代替 \verb|`\n'| 一般是个好习惯。
+
+对于无缓冲的流（例如标准错误输出流 \verb|std::cerr| ），刷新是不必要的，可以直接
+使用 \verb|`\n'| ，过多的 \verb|std::endl| 是影响程序执行效率低下的因素之一。
+
+由于直接输入/输出和操作系统相关，可能需要切换内核态/用户态，需要一定的时间开销，
+频繁地进行操作会极大地降低输入/输出的效率，所以标准库对流的输入/输出操作使用缓冲。
+具体来讲，就是在内存中保存一个大小相对固定的区域（缓冲区）用来储存临时的输入或输
+出。当必要时，才向系统设备复制缓冲区的内容并清空缓冲区，这个过程称为刷新。
+
+\verb|std::cout << std::endl;|
+
+is equivalent to
+
+\verb|std::cout << `\n' << std::flush;|
+
+So,
+\begin{itemize}
+\item Use \verb|std::endl| if you want to force an immediate flush to the output.
+\item Use \verb|`\n'| if you are worried about performance (which is probably not the
+  case if you are using the \verb|<<| operator).
+\end{itemize}
+
+
+\noindent\rule[0.25\baselineskip]{\textwidth}{1pt}
+
+\begin{quotation}
+  {\color{red}C++ 中的声明与定义的关系}
+\end{quotation}
+
+TODO
+
+
+\noindent\rule[0.25\baselineskip]{\textwidth}{1pt}
+
+\begin{quotation}
+  {\color{red}C++ 中的四个关键字： const / extern / static / volatile }
+\end{quotation}
+
+\noindent\textbf{const}
+
+\begin{itemize}
+\item 修饰基本数据类型和类类型，说明其为常量，不能修改
+\item 修饰指针 \textbf{从右向左进行定义的理解}
+  \begin{itemize}
+  \item [-] 指向常量的指针（pointer to const） \verb|const| 在 \verb|*| 左边，指
+    针指向的是常量，不能使用此指针来改变其所指对象的值
+  \item [-] 常量指针（const pointer） \verb|const| 在 \verb|*| 右边，指针本身为
+    常量，即不变的是指针本身的值而非指向的那个值。常量指针必须初始化，而且一旦初
+    始化完成，则它的值（也就是存放在指针中的那个地址）就不能再改变了
+  \end{itemize}
+\item 修饰函数参数和返回值，与上一 item 中的『修饰指针』描述相同
+\item 修饰类中的数据成员，
+\item 修饰类中的成员函数
+
+  \begin{sourcecode}[hbtp]
+    \begin{Verbatim}
+      struct Sales_data {
+        std::string isbn() const { return bookNo; }
+
+        std::string bookNo;
+      };
+    \end{Verbatim}
+    \caption{C++ Primer 上 Sales\_data 类的例子}
+  \end{sourcecode}
+
+  类中的成员函数在被调用时，成员函数通过一个名为 \verb|this| 的额外隐式函数来访
+  问调用它的那个对象。当我们调用一个成员函数时，用请求该函数的对象地址初始化
+  \verb|this| 。例如，如果调用 \verb|total.isbn();| ，则编译器负责把
+  \verb|total| 的地址传递给 \verb|isbn| 的隐式形参 \verb|this| ，可以等价地认为
+  编译器将该调用重写成了 \verb|Sales_data::isbn(&total);| ，其中，调用
+  \verb|Sales_data| 的 \verb|isbn| 成员时传入了 \verb|total| 的地址。
+
+  在成员函数内部，我们可以直接使用调用该函数的对象的成员，而无需通过成员访问运算
+  符来做到这一点，因为 \verb|this| 所指的正是这个对象。任何对类成员的直接访问都
+  被看作 \verb|this| 的隐式引用，也就是说，当 \verb|isbn| 使用 \verb|bookNo| 时，
+  它隐式地使用 \verb|this| 指向的成员，就像写为 \verb|this->bookNo| 一样。
+
+  \verb|this| 形参是隐式定义的，我们可以在成员函数体内部使用 \verb|this|
+
+  \begin{sourcecode}[hbtp]
+    \begin{Verbatim}
+      struct Sales_data {
+        std::string isbn() const { return this->bookNo; }
+
+        std::string bookNo;
+      };
+    \end{Verbatim}
+    \caption{C++ Primer 上 Sales\_data 类的例子，添加上 this}
+  \end{sourcecode}
+
+  因为 \verb|this| 总是指向『这个』对象，所以 \verb|this| 是一个常量指针，我们不
+  允许改变 \verb|this| 中保存的地址。
+
+  默认情况下， \verb|this| 的类型是指向类类型\textbf{非常量版本}的\textbf{常量指针}。例如在上面的
+  \verb|Sales_data| 的成员函数中， \verb|this| 的类型是
+  \verb|Sales_data *const| 。尽管 \verb|this| 是隐式的，它仍然需要遵循初始化规则，
+  意味着（在默认情况下）我们不能把 \verb|this| 绑定到一个常量对象上。这一情况也
+  就使得我们不能在一个常量对象上调用普通的成员函数。
+
+  如果 \verb|isbh| 是一个普通函数而且 \verb|this| 是一个普通的指针参数，则我们应
+  该把 \verb|this| 声明成
+
+  \qquad \verb|const Sales_data *const|
+
+  毕竟，在 \verb|isbn|
+  的函数体内不会改变 \verb|this| 所指的对象，所以把 \verb|this| 设置为指向常量的
+  指针有助于提高函数的灵活性。
+
+  然而， \verb|this| 是隐式的并且不会出现在参数列表中，所以在哪里将 \verb|this|
+  声明成指向常量的指针就是我们必须面临的问题。C++ 语言的做法是允许把
+  \verb|const| 关键字放在成员函数的参数列表之后，此时，紧跟在参数列表后面的
+  \verb|const| 表示 \verb|this| 是一个指向常量的指针。称为\textbf{常量成员函数}
+  （const member function）。
+
+  \begin{sourcecode}[hbtp]
+    \begin{Verbatim}
+      // 伪代码，说明隐式的 this 指针是如何使用的
+      // 下面的代码是非法的：因为我们不能显式地定义自己的 this 指针
+      // 谨记此处地 this 是一个指向常量的指针，因为 isbn 是一个常量成员
+      std::string Sales_data::isbn(const Sales_data *const this) {
+        return this->bookNo;
+      }
+    \end{Verbatim}
+    \caption{C++ Primer 上 Sales\_data 类的 isbn 成员函数伪代码}
+  \end{sourcecode}
+
+  因为 \verb|this| 是一个指向常量的指针，所以常量成员函数不能改变调用它的对象的
+  内容。在上面的例子中， \verb|isbn| 可以读取调用它的对象的数据成员，但是不能写
+  入新值。
+  
+\end{itemize}
+
+\noindent\textbf{extern}
+
+\begin{itemize}
+\item 引用其他文件中的 \verb|const| 变量
+
+  当以编译时初始化的方式定义一个 \verb|const| 对象时，编译器将在编译过程中把用到
+  该变量的地方都替换成对应的值。为了执行此替换，编译器必须知道变量的初始值。如果
+  程序包含多个文件，则每个用了 \verb|const| 对象的文件都必须得能访问到它的初始值
+  才行。要做到这一点，就必须在每一个用到变量的文件中都有对它的定义。为了支持这一
+  用法，同时避免对同一变量的重复定义，默认情况下， \verb|const| 对象被设定为仅在
+  文件内有效。当多个文件中出现了同名的 \verb|const| 变量时，其实等同于在不同文件
+  中分别定义了独立的变量。
+
+  某些时候有这样一种 \verb|const| 变量，它的初始值不是一个常量表达式，但又确实
+  有必要在文件间共享。解决办法是，对于 \verb|const| 变量不管是声明还是定义都添加
+  \verb|extern| 关键字，这样只需要定义一次就可以了：
+
+  \begin{sourcecode}[hbtp]
+    \begin{Verbatim}
+      // example.cc 定义并初始化了一个常量，该常量能被其他文件访问
+      extern const int bufSize = fcn();
+      // example.h 头文件
+      extern const int bufSize;  // 与 example.cc 中定义的 bufSize 是同一个
+    \end{Verbatim}
+    \caption{在多个文件之间共享 const 对象，必须在变量的定义之前添加 extern}
+  \end{sourcecode}
+
+\item C++ 程序有时候需要调用其他语言编写的函数，最常见的是调用 C 语言编写的函数。
+  需使用 \verb|extern| 关键字
+\end{itemize}
+
+\noindent\textbf{static}
+
+C++ 的 \verb|static| 有两种用法：面向过程程序设计中的 \verb|static| 和面向对象程
+序设计中的 \verb|static| 。前者应用于普通变量和函数，不涉及类；后者主要说明
+\verb|static| 在类中的作用。
+
+\noindent\textbf{面向过程设计中的 static}
+\begin{itemize}
+\item [1] \textbf{静态全局变量}
+
+  在全局变量前，加上关键字 \verb|static| ，该变量就被定义成为一个静态全局变量。
+  静态全局变量有以下特点：
+  \begin{itemize}
+  \item 该变量在全局数据区分配内存；
+  \item 未经初始化的静态全局变量会被程序自动初始化为 0（自动变量的值是随机的，除
+    非它被显式初始化）；
+  \item 静态全局变量在声明它的整个文件都是可见的，而在文件之外是不可见的
+  \end{itemize}
+
+  静态变量都在全局数据区分配内存，包括后面将要提到的静态局部变量。对于一个完整的
+  程序，在内存中的分布情况如下图：
+
+  \qquad 代码区
+
+  \qquad 全局数据区
+
+  \qquad 堆区
+
+  \qquad 栈区
+
+  一般程序的由 \verb|new| 产生的动态数据存放在堆区，函数内部的自动变量存放在栈区。
+  自动变量一般会随着函数的退出而释放空间，静态数据（即使是函数内部的静态局部变量）
+  也存放在全局数据区。全局数据区的数据并不会因为函数的退出而释放空间。定义全局变
+  量就可以实现变量在文件中的共享，但定义静态全局变量还有几个好处：1）静态全局变
+  量不能被其它文件所用；2）其它文件中可以定义相同名字的变量，不会发生冲突。
+  
+\item [2] \textbf{静态局部变量}
+
+  在局部变量前，加上关键字 \verb|static| ，该变量就被定义成为一个静态局部变量。
+  通常，在函数体内定义了一个变量，每当程序运行到该语句时都会给该局部变量分配栈内
+  存。但随着程序退出函数体，系统就会收回栈内存，局部变量也相应失效。但有时候我们
+  需要在两次调用之间对变量的值进行保存。通常的想法是定义一个全局变量来实现。但这
+  样一来，变量已经不再属于函数本身了，不再仅受函数的控制，给程序的维护带来不便。
+  静态局部变量正好可以解决这个问题。静态局部变量保存在全局数据区，而不是保存在栈
+  中，每次的值保持到下一次调用，直到下次赋新值。
+
+  静态局部变量有以下特点：
+  \begin{itemize}
+  \item 该变量在全局数据区分配内存；
+  \item 静态局部变量在程序执行到该对象的声明处时被首次初始化，即以后的函数调用不
+    再进行初始化；
+  \item 静态局部变量一般在声明处初始化，如果没有显式初始化，会被程序自动初始化为
+    0；
+  \item 它始终驻留在全局数据区，直到程序运行结束。但其作用域为局部作用域，当定义
+    它的函数或语句块结束时，其作用域随之结束
+  \end{itemize}
+  
+\item [3] \textbf{静态函数}
+
+  在函数的返回类型前加上static关键字,函数即被定义为静态函数。静态函数与普通函数
+  不同，它只能在声明它的文件当中可见，不能被其它文件使用。定义静态函数的好处：1）
+  静态函数不能被其它文件所用；2）其它文件中可以定义相同名字的函数，不会发生冲突
+
+\end{itemize}
+
+\noindent\textbf{面向对象的 static 关键字（类中的 static 关键字）}
+\begin{itemize}
+\item [4] \textbf{静态数据成员}
+
+  在类内数据成员的声明前加上关键字 \verb|static| ，该数据成员就是类内的静态数据
+  成员。静态数据成员有以下特点：
+  \begin{itemize}
+  \item 对于非静态数据成员，每个类对象都有自己的拷贝。而静态数据成员被当作是类的
+    成员。无论这个类的对象被定义了多少个，静态数据成员在程序中也只有一份拷贝，由
+    该类型的所有对象共享访问。也就是说，静态数据成员是该类的所有对象所共有的。对
+    该类的多个对象来说，静态数据成员只分配一次内存，供所有对象共用。所以，静态数
+    据成员的值对每个对象都是一样的，它的值可以更新；
+  \item 静态数据成员存储在全局数据区。静态数据成员定义时要分配空间，所以不能在类
+    声明中定义。
+  \item 静态数据成员和普通数据成员一样遵从 \verb|public| ，\verb|protected| ，
+    \verb|private| 访问规则；
+  \item 因为静态数据成员在全局数据区分配内存，属于本类的所有对象共享，所以，它不
+    属于特定的类对象，在没有产生类对象时其作用域就可见，即在没有产生类的实例时，
+    我们就可以操作它；
+  \item 静态数据成员初始化与一般数据成员初始化不同。静态数据成员初始化的格式为：
+
+    \qquad <数据类型><类名>::<静态数据成员名> = <值>
+    
+  \item 类的静态数据成员有两种访问形式：
+
+    \qquad <类对象名>.<静态数据成员名> or <类类型名>::<静态数据成员名>
+
+    如果静态数据成员的访问权限允许的话（即 \verb|public| 的成员），可在程序中，
+    按上述格式来引用静态数据成员；
+    
+  \item 静态数据成员主要用在各个对象都有相同的某项属性的时候。比如对于一个存款
+    类，每个实例的利息都是相同的。所以，应该把利息设为存款类的静态数据成员。这
+    有两个好处，1）不管定义多少个存款类对象，利息数据成员都共享分配在全局数
+    据区的内存，所以节省存储空间；2）一旦利息需要改变时，只要改变一次，则所
+    有存款类对象的利息全改变过来了；
+  \item 同全局变量相比，使用静态数据成员有两个优势：1）静态数据成员没有进入程
+    序的全局名字空间，因此不存在与程序中其它全局名字冲突的可能性；2）可以实现
+    信息隐藏。静态数据成员可以是 \verb|private| 成员，而全局变量不能
+  \end{itemize}
+  
+\item [5] \textbf{静态成员函数}
+
+  与静态数据成员一样，我们也可以创建一个静态成员函数，它是为类类型提供服务而不是
+  为某一个类的具体对象服务。静态成员函数与静态数据成员一样，都是类的内部实现，属
+  于类定义的一部分。普通的成员函数一般都隐含了一个 \verb|this| 指针，
+  \verb|this| 指针指向类的对象本身，因为普通成员函数总是具体的属于某个类的具体对
+  象的。通常情况下， \verb|this| 是缺省的。但是与普通函数相比，静态成员函数由于
+  不是与任何的对象相联系，因此它不具有 \verb|this| 指针。从这个意义上讲，它无法
+  访问属于类对象的非静态数据成员，也无法访问非静态成员函数，它只能访问其余的静态
+  成员（包括静态成员变量和静态成员函数）。
+
+  关于静态成员函数，可以总结为以下几点：
+  \begin{itemize}
+  \item 出现在类体外的函数定义不能指定关键字 \verb|static| ；
+  \item 静态成员之间可以相互访问，包括静态成员函数访问静态数据成员和访问静态成员
+    函数；
+  \item 非静态成员函数可以任意地访问静态成员函数和静态数据成员；
+  \item 静态成员函数不能访问非静态成员函数和非静态数据成员；
+  \item 由于没有 \verb|this| 指针的额外开销，因此静态成员函数与类的全局函数相比
+    速度上会有少许的增长；
+  \item 调用静态成员函数，可以用成员访问操作符( \verb|.| )和( \verb|->| )为一个
+    类的对象或指向类对象的指针调用静态成员函数，也可以直接使用如下格式：
+
+    \qquad <类名>::<静态成员函数名>(<参数表>)
+
+    调用类的静态成员函数
+  \end{itemize}  
+\end{itemize}
+
+\verb|static| 关键字总结：
+\begin{itemize}
+\item 修饰局部变量，把局部变量从栈区移动到静态数据区，改变声明周期，不改变作用域
+\item 修饰全局变量，改变作用域，由全工程可见变成本源文件可见
+\item 修饰函数，与修饰全局变量相同
+\item 修饰类变量，是类的一部分，只有唯一一份副本
+\item 修饰类成员函数，没有 \verb|this| 指针，只能访问静态成员（包括静态成员变量
+  和静态成员函数）
+\end{itemize}
+
+另外可以参看 C++ 中 \verb|static| 作用和使用方法%
+\footnote{https://blog.csdn.net/artechtor/article/details/2312766}%
+
+
+\noindent\textbf{volatile}
+
+\begin{itemize}
+\item 谈谈 C/C++ 中的 \verb|volatile| %
+  \footnote{https://liam0205.me/2018/01/18/volatile-in-C-and-Cpp/}%
+  \quad 在多线程环境下，不应该假设 \verb|volatile| 能够解决多线程中的某些问题，
+  而应该选用 C++11 中的互斥量和条件变量，分别在头文件 \verb|mutex| 和
+  \verb|condition_varialbe| 。
+
+  \begin{sourcecode}[hbtp]
+    \begin{Verbatim}
+      // global shared data
+      std::mutex m;                   // #include <mutex>
+      std::condition_variable cv;     // #include <condition_variable>
+      bool flag = false;
+      
+      thread1() {
+        flag = false;
+        Type* value = new Type(/* parameters */);
+        thread2(value);
+        std::unique_lock<std::mutex> lk(m);
+        cv.wait(lk, [](){ return flag; });
+        apply(value);
+        lk.unlock();
+        thread2.join();
+        if (nullptr != value) { delete value; }
+        return;
+      }
+      
+      thread2(Type* value) {
+        std::lock_guard<std::mutex> lk(m);
+        // do some evaluations
+        value->update(/* parameters */);
+        flag = true;
+        cv.notify_one();
+        return;
+      }
+    \end{Verbatim}
+    \caption{使用互斥锁和条件变量实现多线程之间的数据同步，伪代码}
+  \end{sourcecode}
+  
+\item C/C++ 中 \verb|volatile| 关键字详解 %
+  \footnote{https://www.cnblogs.com/yc\_sunniwell/archive/2010/07/14/1777432.html}%
+\item 易变性：两条语句，如果存在变量重用的话下一条语句会重新从内存中读取；
+\item 不可优化：保证含有 \verb|volatile| 的指令一定会被执行，而不会被激进的消除；
+\item 顺序性：保证 \verb|volatile| 变量间的顺序性，编译器不会乱序优化，但 CPU 还
+  是可能乱序发射执行。
+\end{itemize}
+
+
+\noindent\rule[0.25\baselineskip]{\textwidth}{1pt}
+
+\begin{quotation}
+  {\color{red}C++ 中的四种强制类型转换： static\_cast / dynamic\_cast / const\_cast / reinterpret\_cast }
+\end{quotation}
+
+一个命名的强制类型转换具有如下形式：
+
+\verb|cast-name<type>(expression);|
+
+\noindent 其中， \verb|type| 是转换的目标类型， \verb|expression| 是要转换的值。
+如果 \verb|type| 是引用类型，则结果是左值。 \verb|cast-name| 是 \verb|static_cast| 、
+\verb|dynamic_cast| 、 \verb|const_cast| 和 \verb|reinterpret_cast| 中的一种。
+\verb|cast-name| 指定了执行的是那种转换。
+
+\noindent\textbf{static\_cast}
+
+\begin{itemize}
+\item 允许执行任意的隐式转换和相反的转换动作（无论是否被允许）。也可以用于基础类
+  型之间的标准转换；
+\item 如类的指针，允许子类类型的指针转换成父类类型的指针（这是一个有效的隐式转
+  换），同时，也能够执行相反动作，转换父类为它的子类。
+\end{itemize}
+
+\noindent\textbf{dynamic\_cast}
+
+只用于对象的指针和引用。当用与多态类型时，它允许任意的隐式类型转换以及相反过程。
+不过，与 \verb|static_cast| 不同，在后一种情况里（注：即隐式转换的相反过程），
+\verb|dynamic_cast| 会检查操作是否有效。也就是说，它会检查转换是否会返回一个被
+请求的有效的完整对象。 \verb|dynamic_cast| 支持运行时类型识别。 
+
+\noindent\textbf{const\_cast}
+
+操纵传递对象的 \verb|const| 属性，或者是设置或者是移除；一般用于强制消除对象的常
+量性。一旦我们去掉了某个对象的 \verb|const| 性质，编译器就不再阻止我们对该对象进
+行写操作了。如果对象本身不是一个常量，使用强制类型转换获得写权限是合法的行为。然
+而如果对象是一个常量，再使用 \verb|const_cast| 执行写操作就会产生未定义的后果。
+
+只有 \verb|const_cast| 能改变表达式的常量属性，使用其他形式的命名强制类型转换改
+变表达式的常量属性都将引发编译器错误。
+
+\noindent\textbf{reinterpret\_cast}
+
+转换一个指针为其他类型的指针，或者转换一个指针为整数类型，操作结果是简单的从一个
+指针到别的指针的值得二进制拷贝。
+
+\noindent\textbf{注意：}强制类型转换干扰了正常的类型检查，因此我们强烈建议程序员
+避免使用强制类型转换。
+
+\subsection{C++ 语言特性}
+
+\begin{quotation}
+  {\color{red}STL}%
+  \footnote{STL 源码剖析，侯捷 \quad 著}%
+\end{quotation}
+
+\noindent\textbf{各类容器的底层实现}
+
+\begin{center}
+  \begin{tabular}{lp{24em}}
+    \hline
+    容器 & 实现 \\
+    \hline
+    \textbf{\ttfamily vector} & 数组，支持快速随机访问 \\
+    \textbf{\ttfamily deque}  & deque 是一个双端队列（double-ended queue），也是在堆中保存内容的。它的保存形式如下： [heap1] -> [heap2] -> [heap3] 每个堆保存好几个元素，然后堆与堆之间有指针指向，看起来像是 list 和 vector 的结合 \\
+    \textbf{\ttfamily list}   & 双向链表，支持快速增删 \\
+    \textbf{\ttfamily stack} & 用 list 或 deque 实现，封闭头部 \\
+    \textbf{\ttfamily queue} & 用 list 或 deque 实现，封闭头部 \\
+    \textbf{\ttfamily priority\_queue} & 底层数据结构一般为 vector 为底层容器，堆 heap 为处理规则来管理底层容器实现 \\
+    \textbf{\ttfamily set} & 红黑树，有序，不重复 \\
+    \textbf{\ttfamily multiset} & 红黑树，有序，可重复 \\
+    \textbf{\ttfamily map} & 红黑树，有序，不重复 \\
+    \textbf{\ttfamily multimap} & 红黑树，有序，可重复 \\
+    \textbf{\ttfamily unordered\_set} & 拉链 hash 表，无序，不重复 \\
+    \textbf{\ttfamily unordered\_multiset} & 拉链 hash 表，无序，可重复 \\
+    \textbf{\ttfamily unordered\_map} & 拉链 hash 表，无序，不重复 \\
+    \textbf{\ttfamily unordered\_multimap} & 拉链 hash 表，无序，可重复 \\ 
+    \hline
+  \end{tabular}
+\end{center}
+
+\begin{center}
+  \textbf{注：}拉链 \verb|hash| 表，当桶内的链表过长影响性能时，将存储的结构由链
+  表换为红黑树，来提高效率。
+\end{center}
+
+\begin{itemize}
+\item [1] 顺序容器
+  \begin{itemize}
+  \item \textbf{\ttfamily vector}
+    \begin{enumerate}
+    \item 在内存中有连续的存储空间，支持快速随机访问，插入删除效率慢，空间分配以
+      2 的倍数动态增长，每次内存空间不足需要先分配新的 2 倍大小的空间，然后把原
+      先空间中的元素拷贝到新空间中；
+    \item \verb|clear| 不会消除 \verb|vector| 在内存中的元素，可以改用
+      \verb|swap| (临时变量)。
+    \end{enumerate}
+  \item \textbf{\ttfamily deque} \quad 支持两端插入数据，内存空间分布是小片的连续，小片之
+    间用链表相连，重新分配空间不需要拷贝原有元素。
+  \item \textbf{\ttfamily list} \quad 双向链表，内存空间不连续，通过指针进行数据访问，随机
+    存储低效，插入删除低效。
+  \end{itemize}
+\item [2] 关联容器
+  \begin{itemize}
+  \item \textbf{\ttfamily set / multiset(允许重复)} \quad 内部有序，元素唯一，无法直接存储
+    元素，只能通过迭代器间接存取。
+  \item \textbf{\ttfamily map / multimap(允许重复)} \quad 内部有序，红黑树中的每个节点在不
+    保存数据时，占用 16 个字（父指针、左右孩子指针、标识红黑色的枚举值），占内存
+    较大。
+  \end{itemize}
+\item [3] 容器适配器
+  \begin{itemize}
+  \item \textbf{\ttfamily queue} \quad \verb|deque| 基础上封装，先进先出。
+  \item \textbf{\ttfamily stack} \quad \verb|deque| 基础上封装，先进后出。
+  \end{itemize}
+\end{itemize}
+
+\noindent\textbf{算法}
+
+如 \verb|sort| 、 \verb|search| 等，模板函数， \verb|[first, last)| 的迭代器
+区间。
+
+\noindent\textbf{迭代器}
+
+一种『范型指针』，所有容器都有自己的迭代器，只有容器本身知道如何遍历自己的元素，
+对指针的 \verb|+| 、 \verb|*| 、 \verb|-| 、 \verb|->| 等操作进行重载。
+
+迭代器失效的总结：
+\begin{center}
+  \begin{tabular}{lp{24em}}
+    \hline
+    容器 & 失效情况 \\
+    \hline
+    \textbf{\ttfamily vector} & vector 的迭代器在内存重新分配时失效（它所指向的元素在该操作的前后不再相同）。当把超过 capacity() - size() 个元素插入 vector 中时，内存会重新分配，所有的迭代器都将失效；否则，指向当前元素以后的任何迭代器都将失效。当删除元素时，指向被删除元素之后的任何元素的迭代器都将失效。 \\
+    \textbf{\ttfamily deque}  & 增加任何元素都将使 deque 的迭代器失效。在 deque 的中间删除元素将使迭代器失效。在 deque 的头或尾删除元素时，只有指向该元素的迭代器失效。 \\
+    \textbf{\ttfamily list}   & 增加任何元素都不会使迭代器失效。删除元素时，除了指向当前被删除元素的迭代器外，其他迭代器都不会失效。 \\
+    \textbf{\ttfamily set} & 如果迭代器所指向的元素被删除，则该迭代器失效。其他任何增加、删除元素的操作都不会使迭代器失效。 \\
+    \textbf{\ttfamily map} & 如果迭代器所指向的元素被删除，则该迭代器失效。其他任何增加、删除元素的操作都不会使迭代器失效。 \\
+    \hline
+  \end{tabular}
+\end{center}
+
+\noindent\textbf{仿函数}
+
+仿函数是一种重载了 \verb|operator()| 的类，使类的行为类似函数。
+
+\noindent\textbf{适配器}
+
+用来修饰容器接口、迭代器接口或仿函数接口；如 \verb|stack| 、 \verb|queue| 用来修
+饰 \verb|deque| 。
+
+\noindent\textbf{空间适配器}
+
+为容器进行空间配置和管理。
+
+
+\noindent\rule[0.25\baselineskip]{\textwidth}{1pt}
+
+\begin{quotation}
+  {\color{red}虚函数}
+\end{quotation}
+
+虚函数是一种在基类定义为 \verb|virtual| 的函数，并在一个或多个派生类中再定义的函
+数。
+
+\noindent\textbf{实现}
+
+\begin{itemize}
+\item 通过 \verb|vtbl| 和 \verb|vptr| 来实现。每个声明或继承了虚函数的类，都有自
+  己的 \verb|vtbl| ，该类的每个对象都有指向 \verb|vtbl| 的 \verb|vptr|
+\item 继承：如果子类覆盖了父类的虚函数，将被放到虚函数表中原来父类虚函数的位置；在多
+  继承的情况下，对于派生类，几重继承，就会有几个虚函数表，这些表按照派生的顺序依
+  次排列，如果子类改写了父类的虚函数，那么就会用子类自己的虚函数覆盖虚函数表的相
+  应的蚊子，如果子类有新的虚函数，那么就添加到第一个虚函数表的末尾。
+\end{itemize}
+
+需要添加一个图片。
+
+\noindent\textbf{性能}
+
+通过 \verb|vptr| 类型找到 \verb|vtbl| ，在 \verb|vtbl| 中找到指针指向的函数。单
+继承性能差不多，多继承会慢（多个 \verb|vbtl| 中查找）。
+
+\noindent\textbf{占用空间}
+
+虚函数表会增加类的体积，在类的继承过程中，每个子类都有父类的虚函数表。对于子类对
+象，但继承情况下会多一个 \verb|vptr| 指针的体积（4 字节）；多继承情况下会多 N 个
+\verb|vptr| 指针的体积（4 $\times$ N 字节）。
+
+\begin{sourcecode}[hbtp]
+  \begin{Verbatim}
+    class A {
+     public:
+      virtual void funa();
+      virtual void funb();
+      void func();
+      static void fund();
+      static int si;
+     private:
+      int i;
+      char c;
+    };
+
+    Q: sizeof(A);
+    A: 12（32 位系统）或 16（64 位系统）
+    // 一个指针（4 或者 8） + int（4）+ char（1） 计算对齐
+  \end{Verbatim}
+  \caption{虚函数表占用空间示例}
+\end{sourcecode}
+
+关于类占用的内存空间，有以下几点需要注意：
+\begin{enumerate}
+\item 如果类中含有虚函数，则编译器需要为类构建虚函数表，类中需要存储一个指针指向
+  这个虚函数表的首地址，注意不管有几个虚函数，都只建立一张表，所有的虚函数地址都
+  存在这张表里，类中只需要一个指针指向虚函数表首地址即可；
+\item 类中的静态成员是被类所有实例所共享的，它不计入 \verb|sizeof| 计算的空间；
+\item 类中的普通函数或静态普通函数都存储在栈中，不计入 \verb|sizeof| 计算的空间；
+\item 类成员采用字节对齐的方式分配空间
+\end{enumerate}
+
+
+\noindent\textbf{纯虚函数}
+
+在基类中没有定义，但要求任何派生类都要定义自己的实现方法。
+
+\noindent\textbf{虚析构函数}
+
+用一个基类的指针删除一个派生类的对象时，派生类的析构函数会被调用。只有当一个类被
+用来作为基类的时候，才把析构函数写成虚函数。
+
+\noindent\textbf{虚函数类型}
+
+\begin{itemize}
+\item \textbf{不能成为虚函数的函数类型}
+  \begin{itemize}
+  \item 内联函数，编译时展看，必须有实体；
+  \item 静态成员函数，属于类，必须有实体；
+  \item 构造函数， \verb|vtbl| 在类被创建后产生，如果析构函数是虚函数，那么构造
+    函数自己无法创建类的实例，也就没有 \verb|vtbl| 去访问。
+  \end{itemize}
+\item \textbf{可以成为虚函数的函数类型}
+  \begin{itemize}
+  \item 析构函数
+  \end{itemize}
+\end{itemize}
+
+
+\noindent\rule[0.25\baselineskip]{\textwidth}{1pt}
+
+\begin{quotation}
+  {\color{red}多态是怎么实现的？}
+\end{quotation}
+
+C++ 的多态性分为静态多态和动态多态：
+\begin{itemize}
+\item 静态多态性：编译期间确定具体执行哪一项操作，主要是通过函数重载和运算符重载
+  来实现的；
+\item 动态多态性：运行时确定具体执行哪一项操作，主要是通过虚函数来实现的。
+\end{itemize}
+
+
+
+
+\noindent\rule[0.25\baselineskip]{\textwidth}{1pt}
+
+\begin{quotation}
+  {\color{red}右值}%
+  \footnote{https://liam0205.me/2016/12/11/rvalue-reference-in-Cpp/}%
+\end{quotation}
+
+
+
+\noindent\rule[0.25\baselineskip]{\textwidth}{1pt}
+
+\begin{quotation}
+  {\color{red}智能指针}
+\end{quotation}
+
+\begin{itemize}
+\item 谈谈代理类%
+  \footnote{https://liam0205.me/2017/11/26/surrogate-in-Cpp/}%
+\item 谈谈智能指针：原理及其实现%
+  \footnote{https://liam0205.me/2018/01/13/smart-pointer/}%
+\item 谈谈 C++ 中的右值引用%
+  \footnote{https://liam0205.me/2016/12/11/rvalue-reference-in-Cpp/}%
+\end{itemize}
+
+
+
+\subsection{一些实现}\label{subsec:some-implementation}
+
+\begin{itemize}
+\item 无锁数据结构%
+  \footnote{http://blog.jobbole.com/90811/}%
+\item C++ 并发编程实战
+\item ZeroMQ 实现中用到的无锁队列
+\item ps-lite 中实现的 \verb|SArray| ，类似于标准库中的 \verb|vector|
+\end{itemize}
+
+
+\noindent\rule[0.25\baselineskip]{\textwidth}{1pt}
+
+\begin{quotation}
+  {\color{red}C++ 实现单例模式}
+\end{quotation}
+
+
+\noindent\rule[0.25\baselineskip]{\textwidth}{1pt}
+
+\begin{quotation}
+  {\color{red}C++ 使用两个栈实现一个队列}%
+  \footnote{http://www.cnblogs.com/wanghui9072229/archive/2011/11/22/2259391.html}%
+\end{quotation}
+
+
+\section{操作系统}\label{sec:os-related}
+
+\subsection{进程、线程与协程}
+
+
+\subsection{select / poll / epoll}
+
+
+\subsection{RPC}
+
+\begin{itemize}
+\item 深入理解 RPC%
+  \footnote{https://juejin.im/entry/57c866230a2b58006b204712}%
+\item 谁能用通俗的语言解释一下什么是 RPC 框架？%
+  \footnote{https://www.zhihu.com/question/25536695}%
+\end{itemize}
+
+
+\section{面试回顾及整理}\label{sec:interviews-and-reviews}
+
+\subsection{微信支付}
+
+\noindent\textbf{一面} 2018 年 8 月 16 日 17:30
+
+\begin{enumerate}
+\item 个人自我介绍？
+\item 如何查看一个进程的父进程号？
+
+  ps -ef 就可以看到，平常多使用的是 ps aux。这两者有何区别呢？
+  
+\item 在一个目录下有很多个其他文件（包含文件和目录），其中有一个文件的文件名是乱
+  码，应该执行什么样的 Linux 命令将这个文件名乱码的文件给删除掉？
+
+  Unix/Linux 系统内部不使用文件名，而使用 inode 号来识别文件。对于系统来说，文件
+  名只是 inode 号便于识别的别称或者绰号。表面上，用户通过文件名，打开文件。实际
+  上，系统内部这个过程分成三步：首先，系统找到这个文件名对应的 inode 号；其次，
+  通过 inode 号，获取 inode 信息；最后，根据 inode 信息，找到文件数据所在的
+  block，读出数据。
+
+  使用 ls -i 命令，可以看到文件名对应的 inode 号。有时，文件名包含特殊字符，无法
+  正常删除。这时，直接删除 inode 节点，就能起到删除文件的作用。
+
+  这里两步来走：
+
+  \begin{enumerate}
+  \item [1)] 查看包含乱码的文件名的 inode 号
+
+    ls -il
+    
+  \item [2)] 利用 inode 号，执行 find 和 xargs 命令删除该文件
+
+    \begin{itemize}
+    \item [-] find ./ -inum 5725772 -exec rm -i {} \;
+    \item [-] rm -i `find ./ -inum 5725772'
+
+      这两个方法都比较好理解，通过 ls -i 这个命令获得要删除文件的 inode 号，
+      然后使用 find 命令的 -inum 选项查找对应 inode 号的文件名，然后将文件名
+      通过 find 的 -exec 参数或者通 `' 反引号传递给 rm 命令
+
+    \item [-] find ./ -inum 5725772 | xargs rm -i
+
+      在使用 find 命令的 -exec 选项处理匹配到的文件时，find 命令将所有匹配到
+      的文件一起传递给 exec 执行。但有些系统对能够传递给 exec 的命令长度有限制，
+      这样在 find 命令运行几分钟之后，就会出现溢出错误。错误信息通常是“参数列太
+      长”或“参数列溢出”。这就是 xargs 命令的用处所在，特别是与 find 命令一起
+      使用。
+    \end{itemize}
+  \end{enumerate}
+
+  
+\item 当在一个浏览器的搜索框中输入网址时会发生怎样的一系列动作？涉及到哪些技术？
+
+  \begin{itemize}
+  \item [-] IP $\rightarrow$ TCP $\rightarrow$ HTTP
+  \item [-] DNS 域名解析服务（域名 $\rightarrow$ IP）、ARP 地址解析协议
+    （IP $\rightarrow$ MAC Address）、ANT（子网 $\leftrightarrow$ 内网）
+  \item [-] 负载均衡、一致性哈希，CDN
+  \item [-] etc$\cdots$
+  \end{itemize}
+  
+\item 在实现 C++ 类时，如果我们不自己实现拷贝构造函数和复制构造函数，编译会为我
+  们自动生成，那么，在什么情况下需要自己手动实现这两个函数呢？ %% TODO Chapter13
+\item STL 使用时，在什么情况下选择使用 std::vector，在什么情况下选用
+  std::list？%% TODO Chapter3.3
+\item std::vector 对象是如何增长的？ %% TODO Chapter9
+\item 如何查找 5 亿个元素的 Top-100（最大的 100 个元素）？
+
+  有两种思路：
+
+  \begin{itemize}
+  \item [1)] 求最大的 Top-K 使用最小堆，求最小的 Top-K 使用最大堆
+
+    \begin{itemize}
+    \item [\textbf{思路}] 使用堆排序来实现 Top-K 的思路很直接。最大（小）堆就
+      是其堆顶元素最大（小），比所有的子节点都要大（小）。求最大的 Top-K 个元素，
+      构建最小堆（堆中共有 K 个元素），堆顶的元素就是堆中最小的元素。堆就保存的
+      是当前扫描到的元素中的 Top-K 个了，怎么理解呢？现在我们从文件头开始读取文
+      件内容，读入文件中的前 K 个元素构建好最小堆（当前最小堆中包含元素为 $A_1$
+      -- $A_K$，为当前读取得所有 K 个元素的 Top-K 组成的堆，假设文件中包含的元
+      素以 A 作为标记，其索引是元素被读取到的顺序），接着读取文件中剩余的元素，例
+      如接下来读取到的是文件中的 (K+1)个元素 $A_{K+1}$，将 $A_{K+1}$ 与已构建最
+      小堆的堆顶元素进行比较，如果 $A_{K+1}$较小，那就不用入堆，因为当前读到的所
+      有元素 $A_1$ -- $A_{K+1}$的 Top-K （最大）就是最小堆中的 K 个元素了；如
+      果$A_{K+1}$ 较大，将堆顶元素移出，将 $A_{K+1}$ 入堆（这里需要删除堆顶元素
+      并插入一个新的元素，需要调整堆，仍然为最小堆）。以上，即，最小堆中的 K 个元
+      素始终保存着当前已经扫描过的元素的 Top-K（最大）元素，新扫描到的元素比堆顶
+      小（比当前最大的 K 个元素中的最小的还要小）就不需要入堆了，新扫描到的元素
+      比堆顶大，将堆顶元素移出，新扫描到的元素入堆，调整仍未最小堆。
+    \item[\textbf{速记口诀}] 最小的 K 个用最大堆，最大的 K 个用最小堆。
+    \item[\textbf{时间复杂度}] $\mathcal{O}(nlogK)$
+    \item[\textbf{适用场景}] 实现的过程中，我们先用前 K 个数建立了一个堆，然后
+      扫描所有元素来维护这个堆。这种做法带来了三个好处：
+      
+      \begin{itemize}
+      \item [1)] 不会改变数据的输入顺序（按顺序读的）；
+      \item [2)] 不会占用太多的内存空间（事实上，一次只读入一个数，内存只要求能
+        容纳前 K 个数即可）；
+      \item [3)] 由于 2)，决定了它特别适合处理海量数据。
+      \end{itemize}
+
+      这三点，也决定了它最优的适用场景。
+
+    \end{itemize}
+    
+  \item [2)] 借鉴快速排序的 partition 函数的思路，进行折半
+
+    \begin{itemize}
+    \item [\textbf{思路}] 
+    \item [\textbf{时间复杂度}]  $\mathcal{O}(n)$
+    \item [\textbf{适用场景}] 对照着堆排的解法来看，partition 函数会不断地交换
+      元素的位置，所以它肯定会改变数据输入的顺序；既然要交换元素的位置，那么所有元
+      素必须要读到内存空间中，所以它会占用比较大的空间，至少能容纳整个数组；数据
+      越多，占用的空间必然越大，海量数据处理起来相对吃力。但是，它的时间复杂度很
+      低，意味着数据量不大时，效率极高。
+    \end{itemize}
+    
+  \end{itemize}
+  
+\item 你有什么问题想问我的么？
+
+  微信支付是如何日活跃量如此巨大的访问的，有用到哪些技术？NJX、RPC 模块、多线程
+  库、手动实现了协程库（rountine）等等
+  
+\end{enumerate}
+
+\noindent\textbf{准备一下}
+
+针对你简历上写的、你曾经做过的、你最值得说道的一个项目或者是一个需求或者是一次优
+化不断追问。作为应聘者你一定要充分做好这方面的准备。建议首先要在你的简历中有意突
+出这个点，让面试官注意到然后想要来问你。接下来你要针对这个点去准备材料，可以从以
+下几个方面去准备：
+
+\begin{itemize}
+\item 为什么要做这个？
+\item 你是如何做这个的？
+\item 期间你遇到了什么问题？你又是如何解决的？
+\item 你做完这个带来了什么实际的效果？
+\item 你做完之后呢？有继续优化和改进吗？
+\item 等等
+\end{itemize}
+
+\noindent\textbf{WXG 面委-技术 GM 面试} 2018 年 9 月 5 日 17:30
+
+
+
+\endinput
+
+
+
+
+
